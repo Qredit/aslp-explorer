@@ -900,7 +900,7 @@ paths:
     get:
       tags:
         - Smartbridge ASLP2 (NFT) (Generator)
-      summary: Generate Smartbridge JSON String for ASLP2:GENESIS
+      summary: Generate Smartbridge JSON String for ASLP2:GENESIS (copy the output and send with 1 ARK to the Master Address)
       parameters:
         - name: symbol
           in: query
@@ -945,7 +945,7 @@ paths:
     get:
       tags:
         - Smartbridge ASLP2 (NFT) (Generator)
-      summary: Generate Smartbridge JSON String for ASLP2:PAUSE
+      summary: Generate Smartbridge JSON String for ASLP2:PAUSE (copy the output and send with 0.00000001 ARK to the Master Address)
       parameters:
         - name: tokenid
           in: query
@@ -975,7 +975,7 @@ paths:
     get:
       tags:
         - Smartbridge ASLP2 (NFT) (Generator)
-      summary: Generate Smartbridge JSON String for ASLP2:RESUME
+      summary: Generate Smartbridge JSON String for ASLP2:RESUME (copy the output and send with 0.00000001 ARK to the Master Address)
       parameters:
         - name: tokenid
           in: query
@@ -1005,7 +1005,7 @@ paths:
     get:
       tags:
         - Smartbridge ASLP2 (NFT) (Generator)
-      summary: Generate Smartbridge JSON String for ASLP2:NEWOWNER
+      summary: Generate Smartbridge JSON String for ASLP2:NEWOWNER (copy the output and send with 0.00000001 ARK to the new owner)
       parameters:
         - name: tokenid
           in: query
@@ -1035,7 +1035,7 @@ paths:
     get:
       tags:
         - Smartbridge ASLP2 (NFT) (Generator)
-      summary: Generate Smartbridge JSON String for ASLP2:AUTHMETA
+      summary: Generate Smartbridge JSON String for ASLP2:AUTHMETA (copy the output and send with 0.00000001 ARK to the Master Address)
       parameters:
         - name: tokenid
           in: query
@@ -1065,7 +1065,7 @@ paths:
     get:
       tags:
         - Smartbridge ASLP2 (NFT) (Generator)
-      summary: Generate Smartbridge JSON String for ASLP2:REVOKEMETA
+      summary: Generate Smartbridge JSON String for ASLP2:REVOKEMETA (copy the output and send with 0.00000001 ARK to the Master Address)
       parameters:
         - name: tokenid
           in: query
@@ -1095,7 +1095,7 @@ paths:
     get:
       tags:
         - Smartbridge ASLP2 (NFT) (Generator)
-      summary: Generate Smartbridge JSON String for ASLP2:CLONE
+      summary: Generate Smartbridge JSON String for ASLP2:CLONE (copy the output and send with 0.00000001 ARK to the Master Address)
       parameters:
         - name: tokenid
           in: query
@@ -1125,7 +1125,7 @@ paths:
     get:
       tags:
         - Smartbridge ASLP2 (NFT) (Generator)
-      summary: Generate Smartbridge JSON String for ASLP2:ADDMETA
+      summary: Generate Smartbridge JSON String for ASLP2:ADDMETA (copy the output and send with 0.00000001 ARK to the Master Address)
       parameters:
         - name: tokenid
           in: query
@@ -1165,7 +1165,7 @@ paths:
     get:
       tags:
         - Smartbridge ASLP2 (NFT) (Generator)
-      summary: Generate Smartbridge JSON String for ASLP2:VOIDMETA
+      summary: Generate Smartbridge JSON String for ASLP2:VOIDMETA (copy the output and send with 0.00000001 ARK to the Master Address)
       parameters:
         - name: tokenid
           in: query
