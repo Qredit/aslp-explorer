@@ -14,6 +14,15 @@ router.get("/", function (req, res, next) {
 
 
 /* GET ark pages. */
+
+router.get("/api", function (req, res, next) {
+  res.render("api", {
+    title: "Ark",
+    routename: "api",
+    csrfToken: req.csrfToken()
+  });
+});
+
 router.get("/transactions", function (req, res, next) {
   res.render("transactions", {
     title: "Ark",
