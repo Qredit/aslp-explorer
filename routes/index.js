@@ -24,7 +24,7 @@ router.get("/api", function (req, res, next) {
 });
 
 router.get("/transactions", function (req, res, next) {
-  res.render("transactions", {
+  res.render("index", {
     title: "Ark",
     routename: "transactions",
     csrfToken: req.csrfToken()
@@ -41,14 +41,6 @@ router.get("/tokenlist", function (req, res, next) {
   res.render("tokenlist", {
     title: "Token List",
     routename: "tokenlist",
-    csrfToken: req.csrfToken()
-  });
-});
-
-router.get("/latestblocks", function (req, res, next) {
-  res.render("latestblocks", {
-    title: "Latest Blocks",
-    routename: "latestblocks",
     csrfToken: req.csrfToken()
   });
 });
