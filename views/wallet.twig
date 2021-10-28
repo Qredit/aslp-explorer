@@ -243,7 +243,8 @@
 				tr.appendChild(td);
 
 				td = document.createElement("td");
-				td.innerHTML = row.name;
+				td.innerHTML = '<a href="/token/' + row.tokenid + '">' + row.name + '</a>';
+				//td.innerHTML = row.name;
 				tr.appendChild(td);
 
 				td = document.createElement("td");
