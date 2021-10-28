@@ -1,0 +1,19 @@
+{% extends '/blocks/main.twig' %}
+
+{% block body %}
+
+<div class="breadcrumb">
+	<h1>404</h1>
+</div>
+<p class="text-small text-muted text-left">Text</p>
+<div class="separator-breadcrumb border-top"></div>
+{% include '/blocks/footer.twig' %}
+{% endblock %}
+
+{% block javascripts %}
+
+<script src="/javascripts/vendor/echarts.min.js"></script>
+<script src="/javascripts/es5/echart.options.min.js"></script>
+<script src="/javascripts/es5/dashboard.v1.script.js"></script>
+
+{% endblock %}

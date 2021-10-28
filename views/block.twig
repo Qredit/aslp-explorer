@@ -1,0 +1,26 @@
+{% extends '/blocks/submain.twig' %}
+
+{% block body %}
+{% include '/blocks/submenu.twig' %}
+
+
+<div class="container">
+
+	<div class="row mh">
+		<div class="col-md-12 text-center">
+			<h2>Coming Soon</h2>
+		</div>
+
+		<div class="mt-auto"></div>
+	</div>
+</div>
+{% include '/qredit/footer.twig' %}
+
+{% endblock %}
+{% block javascripts %}
+
+
+<script src="{{asset('/js/vendor/echarts.min.js')}}"></script>
+<script src="{{asset('/js/es5/echart.options.min.js')}}"></script>
+<script src="{{asset('/js/es5/dashboard.v1.script.js')}}"></script>
+{% endblock %}

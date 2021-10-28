@@ -1,0 +1,231 @@
+<body class="layout-top-nav dark-skin theme-primary fixed">
+
+	<div class="wrapper">
+		<div id="loader"></div>
+		<header class="flex flex-col">
+			<div class="mb-1 h-20"></div>
+			<div id="navbar" class="fixed z-20 w-full" x-data="Navbar.dropdown({
+            dark: false,
+            open: false,
+            showSettings: false
+        })" x-init="init" @toggle-dark-mode.window="dark = !dark">
+				<nav x-ref="nav"
+					class="relative z-30 bg-white border-b border-theme-secondary-300 dark:bg-theme-secondary-900 dark:border-theme-secondary-800"
+					style="box-shadow: rgba(192, 200, 207, 0) 0px 2px 10px 0px; border-color: rgb(219, 222, 229);">
+					<div class="px-8 md:px-10">
+						<div class="flex relative justify-between h-21">
+							<div class="flex flex-shrink-0 items-center">
+								<a class="flex items-center" href="/">
+									<span class="flex relative items-center">
+										<img src="https://ark.io/images/logo.svg" class="h-10 lg:h-11">
+										<span
+											class="hidden ml-4 sm:flex sm:items-center sm:text-2xl text-theme-secondary-900 dark:text-theme-secondary-200">
+											<span class="font-bold">
+												ASLP Explorer
+											</span>
+										</span>
+									</span>
+								</a>
+							</div>
+							<div class="hidden items-center mr-auto md:flex">
+								<div class="">
+									<ul class="header-megamenu nav">
+										<li class="btn-group d-lg-inline-flex d-none">
+											<div class="app-menu">
+												<div class="search-bx mx-5">
+													<form id="domain-search-header">
+														<div class="input-group">
+															<input type="search" class="form-control"
+																placeholder="Search blocks, transactions, wallets..                                     |"
+																aria-label="Search" aria-describedby="button-addon2"
+																id="searchinput" name="domains">
+
+														</div>
+													</form>
+												</div>
+											</div>
+										</li>
+									</ul>
+								</div>
+
+							</div>
+							<div class="flex justify-end">
+								<div class="flex flex-1 justify-end items-center sm:justify-between sm:items-stretch">
+									<div class="hidden items-center -mx-4 lg:flex">
+										<a href="/transactions" class="inline-flex font-semibold leading-5 group
+                                            focus:outline-none transition duration-150 ease-in-out h-full px-2 mx-2 relative border-t-2 border-transparent rounded
+                                                                                            text-theme-secondary-700 hover:text-theme-secondary-800 dark:text-theme-secondary-500 dark:hover:text-theme-secondary-400
+                                                                                    ">
+											<span
+												class="flex items-center w-full h-full border-b-2   border-transparent group-hover:border-theme-secondary-300 ">
+												<span>Transactions</span>
+											</span>
+										</a>
+										<a href="/latestblocks" class="inline-flex font-semibold leading-5 group
+                                            focus:outline-none transition duration-150 ease-in-out h-full px-2 mx-2 relative border-t-2 border-transparent rounded
+                                                                                            text-theme-secondary-700 hover:text-theme-secondary-800 dark:text-theme-secondary-500 dark:hover:text-theme-secondary-400
+                                                                                    ">
+											<span
+												class="flex items-center w-full h-full border-b-2   border-transparent group-hover:border-theme-secondary-300 ">
+												<span>Latest Blocks</span>
+											</span>
+										</a>
+										<a href="/tokenlist" class="inline-flex font-semibold leading-5 group
+                                            focus:outline-none transition duration-150 ease-in-out h-full px-2 mx-2 relative border-t-2 border-transparent rounded
+                                                                                            text-theme-secondary-700 hover:text-theme-secondary-800 dark:text-theme-secondary-500 dark:hover:text-theme-secondary-400
+                                                                                    ">
+											<span
+												class="flex items-center w-full h-full border-b-2   border-transparent group-hover:border-theme-secondary-300 ">
+												<span>Token List</span>
+											</span>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<template x-if="open">
+						<div class="border-t-2 shadow-xl lg:hidden border-theme-secondary-200 dark:border-theme-secondary-800"
+							@click.away="open = false">
+							<div class="pt-2 pb-4 rounded-b-lg">
+								<div class="flex">
+									<a href="/transactions" class="navbar-mobile-link">
+										Transactions
+									</a>
+								</div>
+								<div class="flex">
+									<a href="/latestblocks" class="navbar-mobile-link">
+										Latest Blocks
+									</a>
+								</div>
+								<div class="flex">
+									<a href="/tokenlist" class="navbar-mobile-link">
+										Token List
+									</a>
+								</div>
+							</div>
+						</div>
+					</template>
+				</nav>
+			</div>
+		</header>
+
+		<!-- old -->
+		<header class="main-header" style="margin-top:25px;margin-bottom:25px;">
+			<div class="container">
+				<div class="inside-header">
+					<!-- Header Navbar -->
+					<div class="mt-auto"></div>
+
+					<nav class="navbar navbar-static-top">
+						<!-- Sidebar toggle button-->
+
+
+					</nav>
+
+				</div>
+			</div>
+		</header>
+		<div class="container search-title" id="aftersearch"></div>
+	</div>
+</body>
+
+
+
+
+
+<div class="mt-auto header-top-height-explorer"></div>
+
+
+<script>
+	function createHref(url, param, title) {
+		var a = document.createElement('a');
+		var link = document.createTextNode(title);
+		a.appendChild(link);
+		a.title = title;
+		a.href = url + "/" + param;
+		return a;
+	}
+	function createTable(tableType, objectArray, fields, fieldTitles) {
+		let tbl = document.createElement('table');
+		tbl.setAttribute("class", "table")
+		let thead = document.createElement('thead');
+		let thr = document.createElement('tr');
+		fieldTitles.forEach((fieldTitle) => {
+			let th = document.createElement('th');
+			th.appendChild(document.createTextNode(fieldTitle));
+			thr.appendChild(th);
+		});
+		thead.appendChild(thr);
+		tbl.appendChild(thead);
+		var title = document.createElement("h1")
+		var urlToRedirect = '';
+		switch (tableType) {
+			case 'block': urlToRedirect = '/block/';
+				break;
+			case 'wallet': urlToRedirect = '/wallet';
+				break;
+		}
+		tbl.before(title)
+		let tbdy = document.createElement('tbody');
+		let tr = document.createElement('tr');
+		fields.forEach((field) => {
+			var td = document.createElement('td');
+			td.appendChild(createHref(urlToRedirect, objectArray[field], objectArray[field]));
+			tr.appendChild(td);
+		});
+		tbdy.appendChild(tr);
+		tbl.appendChild(tbdy);
+		return tbl;
+	}
+	var socket = io();
+	socket.on('showsearch', function (data) {
+		const results = document.getElementById("aftersearch");
+		results.textContent = '';
+		if (data.blocks) {
+			var title = document.createElement("h1")
+			title.appendChild(document.createTextNode("Search results: block:"));
+			results.appendChild(title);
+			results.appendChild(createTable('block', data.blocks, [
+				'id', 'height'
+			], ['Id', 'Height']))
+		}
+		if (data.wallets) {
+			var title = document.createElement("h1")
+			title.appendChild(document.createTextNode("Search results: wallet:"));
+			results.appendChild(title);
+			results.appendChild(createTable('wallet', data.wallets, [
+				'address'
+			], ['Address']))
+		}
+		if (data.transactions) {
+			var title = document.createElement("h1")
+			title.appendChild(document.createTextNode("Search results: transaction:"));
+			results.appendChild(title);
+			results.appendChild(createTable('transaction', data.transactions, [
+				'sender', 'recipient', 'vendorField'
+			], ['From', 'To', 'Smartbridge']))
+		}
+		if (data.tokenTransactions) {
+			var title = document.createElement("h1")
+			title.appendChild(document.createTextNode("Search results: token transaction : "));
+			results.appendChild(title)
+			results.appendChild(createTable('tokentransaction', data.tokenTransactions, [
+				'sender', 'recipient', 'vendorField'
+			], ['From', 'To', 'Token Transfer Data']))
+		}
+		if (data.tokens) {
+			var title = document.createElement("h1")
+			title.appendChild(document.createTextNode("Search results: token:"));
+			results.appendChild(title)
+			results.appendChild(createTable('token', data.tokens, [
+				'type', 'lastUpdatedBlock'
+			], ['Type', 'Last Block']))
+		}
+	}
+	);
+	searchinput.oninput = function () {
+		var searchString = searchinput.value;
+		socket.emit('search', searchString);
+	}
+</script>

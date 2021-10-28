@@ -1,0 +1,146 @@
+{% extends '/blocks/main.twig' %}
+
+{% block body %}
+{% include '/blocks/menu.twig' %}
+
+<div class="py-12 w-full container flex flex-col">
+	<div class="box-header with-border">
+		<h4 class="box-title">Latest Transactions</h4>
+	</div>
+	<div class="table-container w-full">
+		<table class="table no-margin table-hover">
+			<thead>
+				<tr>
+					<th>Transaction ID</th>
+					<th>Confirms</th>
+					<th>Timestamp</th>
+					<th>Sender</th>
+					<th>Recipient</th>
+					<th>Amount</th>
+					<th>Smartbridge</th>
+				</tr>
+			</thead>
+			<tbody id='transactions'></tbody>
+		</table>
+	</div>
+</div>
+
+{% include '/blocks/footer.twig' %}
+
+{% endblock %}
+
+
+{% block javascripts %}
+
+<script>
+
+	$(document).ready(function () {
+
+		var socket = io();
+
+		socket.emit('gettransactions', {});
+
+		socket.on('showtransactions', function (data) {
+
+			var mainTable = document.getElementById("transactions");
+
+			var tr,
+				td;
+
+			data.forEach(function (row) {
+
+				tr = document.createElement("tr");
+
+				td = document.createElement("td");
+				td.innerHTML = '<a href="/transaction/' + row.id + '">' + row.id.substr(0, 5) + '...' + row.id.substr(-5) + '</a>';
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = row.confirmations;
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.classList.add("text-success");
+				td.innerHTML = timeDifference(row.timestamp);
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = '<a href="/wallet/' + row.sender + '">' + row.sender.substr(0, 5) + '...' + row.sender.substr(-5) + '</a>';
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = '<a href="/wallet/' + row.recipient + '">' + row.recipient.substr(0, 5) + '...' + row.recipient.substr(-5) + '</a>';
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = (parseFloat(row.amount) / 100000000).toFixed(0) + ' ARK';
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = row.smartbridge;
+				tr.appendChild(td);
+
+				transactions.appendChild(tr);
+
+
+			});
+
+		});
+
+	});
+
+	function timeDifference(datetime) {
+
+		var d = new Date();
+		var current = d.getTime();
+		var previous = Date.parse(datetime);
+
+		var msPerMinute = 60 * 1000;
+		var msPerHour = msPerMinute * 60;
+		var msPerDay = msPerHour * 24;
+		var msPerMonth = msPerDay * 30;
+		var msPerYear = msPerDay * 365;
+
+		var elapsed = current - previous;
+
+		if (elapsed < msPerMinute) {
+			return Math.round(elapsed / 1000) + ' seconds ago';
+		} else if (elapsed < msPerHour) {
+			return Math.round(elapsed / msPerMinute) + ' minutes ago';
+		} else if (elapsed < msPerDay) {
+			return Math.round(elapsed / msPerHour) + ' hours ago';
+		} else if (elapsed < msPerMonth) {
+			return '± ' + Math.round(elapsed / msPerDay) + ' days ago';
+		} else if (elapsed < msPerYear) {
+			return '± ' + Math.round(elapsed / msPerMonth) + ' months ago';
+		} else {
+			return '± ' + Math.round(elapsed / msPerYear) + ' years ago';
+		}
+	}
+
+	function getStatus(datetime) {
+
+		var d = new Date();
+		var current = d.getTime();
+		var previous = Date.parse(datetime);
+
+		var msPerMinute = 60 * 1000;
+		var msPerHour = msPerMinute * 60;
+		var msPerDay = msPerHour * 24;
+		var msPerMonth = msPerDay * 30;
+		var msPerYear = msPerDay * 365;
+
+		var elapsed = (current - previous) / 1000;
+
+		if (elapsed < (16 * 60)) {
+			return '<span style="color:green;"><i class="fas fa-circle"></i><i class="fas fa-circle"></i></span>';
+		} else if (elapsed < (24 * 60)) {
+			return '<span style="color:orange;"><i class="fas fa-circle"></i><i class="fas fa-circle"></i></span>';
+		} else {
+			return '<span style="color:red;"><i class="fas fa-circle"></i><i class="fas fa-circle"></i></span>';
+		}
+
+	}
+</script>
+
+{% endblock %}

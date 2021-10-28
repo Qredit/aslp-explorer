@@ -1,0 +1,293 @@
+{% extends '/blocks/submain.twig' %}
+
+{% block body %}
+{% include '/blocks/menu.twig' %}
+
+<div class="container">
+	<div class="grid grid-cols-1 grid-rows-3 gap-5 xl:grid-cols-3 xl:grid-rows-1 xl:place-items-stretch">
+		<div class="flex w-full" wire:poll.60s="">
+			<div
+				class="rounded-lg p-8 border border-theme-secondary-300 dark:border-theme-secondary-800 flex flex-col gap-6 w-full">
+				<div class="xl:w-full">
+					<h2
+						class="mb-0 text-sm font-semibold leading-none text-theme-secondary-900 dark:text-theme-secondary-200">
+						Document</h2><br>
+					<span id='documenturi'></span>
+				</div>
+				<div class="pt-2 w-full">
+					<h3
+						class=" mb-0 text-sm font-semibold leading-none text-theme-secondary-500 dark:text-theme-secondary-700">
+						Name</h3>
+					<span id='name'></span>
+				</div>
+				<div class="pt-2 w-full">
+					<h3
+						class=" mb-0 text-sm font-semibold leading-none text-theme-secondary-500 dark:text-theme-secondary-700">
+						TokenID</h3>
+					<span id='tokenidhex'></span>
+				</div>
+				<div class="pt-2 w-full">
+					<h3
+						class=" mb-0 text-sm font-semibold leading-none text-theme-secondary-500 dark:text-theme-secondary-700">
+						Symbol</h3>
+					<span id='symbol'></span>
+				</div>
+				<div class="pt-2 w-full">
+					<h3
+						class=" mb-0 text-sm font-semibold leading-none text-theme-secondary-500 dark:text-theme-secondary-700">
+						Owner</h3>
+					<span id='owneraddress'></span>
+				</div>
+			</div>
+		</div>
+		<div class="flex w-full" wire:poll.60s="">
+			<div
+				class="rounded-lg p-8 border border-theme-secondary-300 dark:border-theme-secondary-800 flex flex-col gap-6 w-full">
+				<div class="xl:w-full">
+					<h2
+						class="mb-0 text-sm font-semibold leading-none text-theme-secondary-900 dark:text-theme-secondary-200">
+						Token Details</h2><br>
+					<span id='documenturi'></span>
+				</div>
+				<div class="pt-2 w-full">
+					<h3
+						class=" mb-0 text-sm font-semibold leading-none text-theme-secondary-500 dark:text-theme-secondary-700">
+						Token Type</h3>
+					<span id='type'></span>
+				</div>
+				<div class="pt-2 w-full">
+					<h3
+						class=" mb-0 text-sm font-semibold leading-none text-theme-secondary-500 dark:text-theme-secondary-700">
+						Paused</h3>
+					<span id='paused'></span>
+				</div>
+				<div class="pt-2 w-full">
+					<h3
+						class=" mb-0 text-sm font-semibold leading-none text-theme-secondary-500 dark:text-theme-secondary-700">
+						Decimals</h3>
+					<span id='decimals'></span>
+				</div>
+				<div class="pt-2 w-full">
+					<h3
+						class=" mb-0 text-sm font-semibold leading-none text-theme-secondary-500 dark:text-theme-secondary-700">
+						Pausable</h3>
+					<span id='pausable'></span>
+				</div>
+				<div class="pt-2 w-full">
+					<h3
+						class=" mb-0 text-sm font-semibold leading-none text-theme-secondary-500 dark:text-theme-secondary-700">
+						Mintable</h3>
+					<span id='mintable'></span>
+				</div>
+				<div class="pt-2 w-full">
+					<h3
+						class=" mb-0 text-sm font-semibold leading-none text-theme-secondary-500 dark:text-theme-secondary-700">
+						Tokens Minted</h3>
+					<span id='qtytokenminted'></span>
+				</div>
+				<div class="pt-2 w-full">
+					<h3
+						class=" mb-0 text-sm font-semibold leading-none text-theme-secondary-500 dark:text-theme-secondary-700">
+						Tokens Burned</h3>
+					<span id='qtytokenburned'></span>
+				</div>
+				<div class="pt-2 w-full">
+					<h3
+						class=" mb-0 text-sm font-semibold leading-none text-theme-secondary-500 dark:text-theme-secondary-700">
+						Circulating Supply</h3>
+					<span id='qtytokencirculatingsupply'></span>
+				</div>
+			</div>
+		</div>
+		<div class="flex w-full" wire:poll.60s="">
+			<div class="flex w-full" wire:poll.60s="">
+				<div
+					class="rounded-lg p-8 border border-theme-secondary-300 dark:border-theme-secondary-800 flex flex-col gap-6 w-full">
+					<div class="xl:w-full">
+						<h2
+							class="mb-0 text-sm font-semibold leading-none text-theme-secondary-900 dark:text-theme-secondary-200">
+							Block Details</h2><br>
+						<span id='documenturi'></span>
+					</div>
+					<div class="pt-2 w-full">
+						<h3
+							class=" mb-0 text-sm font-semibold leading-none text-theme-secondary-500 dark:text-theme-secondary-700">
+							Last Updated Block</h3>
+						<span id='lastupdatedblock'></span>
+					</div>
+					<div class="pt-2 w-full">
+						<h3
+							class=" mb-0 text-sm font-semibold leading-none text-theme-secondary-500 dark:text-theme-secondary-700">
+							Timestamp</h3>
+						<span id='timestamp'></span>
+					</div>
+					<div class="pt-2 w-full">
+						<h3
+							class=" mb-0 text-sm font-semibold leading-none text-theme-secondary-500 dark:text-theme-secondary-700">
+							Genesis Quantity</h3>
+						<span id='genesisquantity'></span>
+					</div>
+					<div class="pt-2 w-full">
+						<h3
+							class=" mb-0 text-sm font-semibold leading-none text-theme-secondary-500 dark:text-theme-secondary-700">
+							Block Created Height</h3>
+						<span id='blockcreatedheight'></span>
+					</div>
+					<div class="pt-2 w-full">
+						<h3
+							class=" mb-0 text-sm font-semibold leading-none text-theme-secondary-500 dark:text-theme-secondary-700">
+							Block Created Id</h3>
+						<span id='blockcreatedid'></span>
+					</div>
+					<div class="pt-2 w-full">
+						<h3
+							class=" mb-0 text-sm font-semibold leading-none text-theme-secondary-500 dark:text-theme-secondary-700">
+							Creation TX ID</h3>
+						<span id='creationtxid'></span>
+					</div>
+					<div class="pt-2 w-full">
+						<h3
+							class=" mb-0 text-sm font-semibold leading-none text-theme-secondary-500 dark:text-theme-secondary-700">
+							Valid TXns Since Genesis</h3>
+						<span id='qtyvalidtxnssincegenesis'></span>
+					</div>
+					<div class="pt-2 w-full">
+						<h3
+							class=" mb-0 text-sm font-semibold leading-none text-theme-secondary-500 dark:text-theme-secondary-700">
+							Valid Token Addresses</h3>
+						<span id='qtyvalidtokenaddresses'></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="py-12 w-full container flex flex-col">
+	<hr style="margin-bottom:25px;margin-top:25px;">
+	<div class="box-header with-border">
+		<h4 class="box-title">Meta Data</h4>
+	</div>
+	<div class="table-container w-full">
+		<table class="table no-margin table-hover">
+			<thead>
+				<tr>
+					<th scope="col">TX ID</th>
+					<th scope="col">Block ID</th>
+					<th scope="col">Block Height</th>
+					<th scope="col">Poster Address</th>
+					<th scope="col">Timestamp</th>
+					<th scope="col">MetaName</th>
+					<th scope="col">MetaData</th>
+					<th scope="col">Chunk</th>
+					<th scope="col">Void</th>
+				</tr>
+			</thead>
+			<tbody id='metadetails'></tbody>
+		</table>
+	</div>
+</div>
+
+{% endblock %} {% block javascripts %}
+
+<script type="text/javascript">
+
+	$(document).ready(function () {
+
+		var socket = io();
+
+		socket.emit('gettokeninfo', { tokenid: '{{ tokenid }}' });
+		socket.on('showtokeninfo', function (data) {
+
+			$('#documenturi').html('<img class="documenturi" style="max-width:250px;max-height:250px;" src="' + data.documenturi + '"></img>');
+
+			$('#type').html(data.type);
+			$('#paused').html(data.paused);
+			$('#lastupdatedblock').html('<a href="/block/' + data.lastupdatedblock + '">' + data.lastupdatedblock + '</a>');
+			$('#owneraddress').html('<a href="/wallet/' + data.owneraddress + '">' + data.owneraddress + '</a>');
+			$('#tokenidhex').html('<a href="/token/' + data.tokenidhex + '">' + data.tokenidhex + '</a>');
+			$('#timestamp').html(data.timestamp);
+			$('#aslpversion').html(data.aslpversion);
+			$('#symbol').html(data.symbol);
+			$('#name').html(data.name);
+			$('#decimals').html(data.decimals);
+			$('#genesisquantity').html(data.genesisquantity);
+			$('#pausable').html(data.pausable);
+			$('#mintable').html(data.mintable);
+			$('#blockcreatedheight').html(data.blockcreatedheight);
+			$('#blockcreatedid').html('<a href="/block/' + data.blockcreatedid + '">' + data.blockcreatedid.substr(0, 8) + '...' + data.blockcreatedid.substr(-8) + '</a>');
+			$('#blocklastactivesend').html(data.blocklastactivesend);
+			$('#blocklastactivemint').html(data.blocklastactivemint);
+			$('#creationtxid').html('<a href="/transaction/' + data.creationtxid + '">' + data.creationtxid.substr(0, 8) + '...' + data.creationtxid.substr(-8) + '</a>');
+			$('#qtyvalidtxnssincegenesis').html(data.qtyvalidtxnssincegenesis);
+			$('#qtyvalidtokenaddresses').html(data.qtyvalidtokenaddresses);
+			$('#qtytokenminted').html(data.qtytokenminted);
+			$('#qtytokenburned').html(data.qtytokenburned);
+			$('#qtytokencirculatingsupply').html(data.qtytokencirculatingsupply);
+		});
+	});
+</script>
+
+<script type="text/javascript">
+
+	$(document).ready(function () {
+
+		var socket = io();
+
+		socket.emit('gettokenmeta', { tokenid: '{{ tokenid }}' });
+		socket.on('showtokenmeta', function (data) {
+
+			var mainTable = document.getElementById("metadetails");
+			var tr,
+				td;
+
+			data.forEach(function (row) {
+
+				tr = document.createElement("tr");
+
+				td = document.createElement("td");
+				td.innerHTML = '<a href="/transaction/' + row.metatxid + '">' + row.metatxid.substr(0, 4) + '...' + row.metatxid.substr(-4) + '</a>';
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = '<a href="/block/' + row.metablockid + '">' + row.metablockid.substr(0, 4) + '...' + row.metablockid.substr(-4) + '</a>';
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = row.metablockheight;
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = '<a href="/wallet/' + row.posteraddress + '">' + row.posteraddress.substr(0, 4) + '...' + row.posteraddress.substr(-4) + '</a>';
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = row.timestamp;
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = row.metaname;
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = row.metadata;
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = row.metachunk;
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = row.void;
+				tr.appendChild(td);
+
+				metadetails.appendChild(tr);
+
+			});
+		});
+	});
+</script>
+
+
+{% endblock %}

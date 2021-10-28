@@ -1,0 +1,325 @@
+{% extends '/blocks/submain.twig' %}
+
+{% block body %}
+{% include '/blocks/menu.twig' %}
+
+<div class="container mh mt-25" style="margin-bottom:25px;">
+	<div class="col-lg-12 col-12">
+		<div class="card-group">
+			<div class="card" style="margin-bottom:0px!important;">
+				<div class="card-body">
+					<h4 class="card-title b-0 px-0 text-center" title="Wallet Address"><i class="mdi mdi-wallet"></i>
+						Address
+					</h4>
+					<p class="text-muted text-center" title="Copy to Clipboard">{{ walletId }}</p>
+				</div>
+			</div>
+
+			<div class="card" style="margin-bottom:0px!important;">
+				<div class="card-body">
+					<h4 class="card-title b-0 px-0 text-center"><i class="mdi mdi-key"></i> Public Key</h4>
+					<p class="text-muted text-center" id='publickey' title="Copy to Clipboard">
+					</p>
+				</div>
+			</div>
+
+			<div class="card" style="margin-bottom:0px!important;">
+				<div class="card-body">
+					<h4 class="card-title b-0 px-0 text-center"><i class="mdi mdi-coins"></i> Balance</h4>
+					<p class="text-muted text-center" id='balance' title="Copy to Clipboard"></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="py-12 w-full container flex flex-col">
+	<div class="box-header with-border">
+		<h4 class="box-title">ASLP Tokens</h4>
+	</div>
+	<div class="table-container w-full">
+		<table class="table no-margin table-hover">
+			<thead>
+				<tr>
+					<th scope="col">Version</th>
+					<th scope="col">Creator Address</th>
+					<th scope="col">Token ID</th>
+					<th scope="col">Name</th>
+					<th scope="col">Symbol</th>
+					<th scope="col">Genesis QTY</th>
+					<th scope="col">Circulation</th>
+					<th scope="col">Pausable</th>
+					<th scope="col">Mintable</th>
+					<th scope="col">QTY Owners</th>
+				</tr>
+			</thead>
+			<tbody id='wallettokens'></tbody>
+		</table>
+	</div>
+</div>
+
+<div class="py-12 w-full container flex flex-col">
+	<div class="box-header with-border">
+		<h4 class="box-title">Wallet Transactions</h4>
+	</div>
+	<div class="table-container w-full">
+		<table class="table no-margin table-hover">
+			<table class="table no-margin table-hover">
+				<thead>
+					<tr>
+						<th scope="col">TX ID</th>
+						<th scope="col">Timestamp</th>
+						<th scope="col">Sender</th>
+						<th scope="col">Recipient</th>
+						<th scope="col">Amount</th>
+						<th scope="col">Confirmations</th>
+						<th scope="col">Smartbridge</th>
+					</tr>
+				</thead>
+				<tbody id='wallettransactions'></tbody>
+			</table>
+		</table>
+	</div>
+</div>
+
+
+{% include '/blocks/footer.twig' %}
+{% endblock %}
+{% block javascripts %}
+
+<script type="text/javascript">
+
+	$(document).ready(function () {
+
+		var socket = io();
+
+		socket.emit('getwallettransactions', { walletId: '{{ walletId }}' });
+
+		socket.on('showwallettransactions', function (data) {
+
+			var mainTable = document.getElementById("wallettransactions");
+			var tr,
+				td;
+
+			data.forEach(function (row) {
+
+				tr = document.createElement("tr");
+
+
+				td = document.createElement("td");
+				td.innerHTML = '<a href="/transaction/' + row.id + '">' + row.id.substr(0, 4) + '...' + row.id.substr(-4) + '</a>';
+				tr.appendChild(td);
+
+
+				td = document.createElement("td");
+				td.innerHTML = timeDifference(row.timestamp);
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = '<a href="/wallet/' + row.sender + '">' + row.sender.substr(0, 5) + '...' + row.sender.substr(-5) + '</a>';
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = '<a href="/wallet/' + row.recipient + '">' + row.recipient.substr(0, 5) + '...' + row.recipient.substr(-5) + '</a>';
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = (parseFloat(row.amount) / 100000000).toFixed(0) + ' ARK';
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = row.confirmations;
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = row.smartbridge;
+				tr.appendChild(td);
+
+				wallettransactions.appendChild(tr);
+
+			});
+
+		});
+
+	});
+	function timeDifference(datetime) {
+
+		var d = new Date();
+		var current = d.getTime();
+		var previous = Date.parse(datetime);
+
+		var msPerMinute = 60 * 1000;
+		var msPerHour = msPerMinute * 60;
+		var msPerDay = msPerHour * 24;
+		var msPerMonth = msPerDay * 30;
+		var msPerYear = msPerDay * 365;
+
+		var elapsed = current - previous;
+
+		if (elapsed < msPerMinute) {
+			return Math.round(elapsed / 1000) + ' seconds ago';
+		} else if (elapsed < msPerHour) {
+			return Math.round(elapsed / msPerMinute) + ' minutes ago';
+		} else if (elapsed < msPerDay) {
+			return Math.round(elapsed / msPerHour) + ' hours ago';
+		} else if (elapsed < msPerMonth) {
+			return '± ' + Math.round(elapsed / msPerDay) + ' days ago';
+		} else if (elapsed < msPerYear) {
+			return '± ' + Math.round(elapsed / msPerMonth) + ' months ago';
+		} else {
+			return '± ' + Math.round(elapsed / msPerYear) + ' years ago';
+		}
+	}
+
+</script>
+<script type="text/javascript">$(document).ready(function () {
+		$("button-txid").click(function (event) {
+			event.preventDefault();
+			CopyToClipboard("{{ walletId }}", true, "Value copied");
+		});
+	});
+
+	function CopyToClipboard(value, showNotification, notificationText) {
+		var $temp = $("<input>");
+		$("body").append($temp);
+		$temp.val(value).select();
+		document.execCommand("copy");
+		$temp.remove();
+
+		if (typeof showNotification === 'undefined') {
+			showNotification = true;
+		}
+		if (typeof notificationText === 'undefined') {
+			notificationText = "Copied to clipboard";
+		}
+
+		var notificationTag = $("div.copy-notification");
+		if (showNotification && notificationTag.length == 0) {
+			notificationTag = $("<div/>", {
+				"class": "copy-notification",
+				text: notificationText
+			});
+			$("body").append(notificationTag);
+
+			notificationTag.fadeIn("slow", function () {
+				setTimeout(function () {
+					notificationTag.fadeOut("slow", function () {
+						notificationTag.remove();
+					});
+				}, 1000);
+			});
+		}
+	}
+</script>
+<script type="text/javascript">
+
+	$(document).ready(function () {
+
+		var socket = io();
+
+		socket.emit('getwallettokens', { walletId: '{{ walletId }}' });
+
+		socket.on('showwallettokens', function (data) {
+
+			var mainTable = document.getElementById("wallettokens");
+
+			var tr,
+				td;
+
+			data.forEach(function (row) {
+
+				tr = document.createElement("tr");
+
+				td = document.createElement("td");
+				td.innerHTML = row.type;
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = '<a href="/wallet/' + row.owneraddress + '">' + row.owneraddress.substr(0, 5) + '...' + row.owneraddress.substr(-5) + '</a>';
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = '<a href="/token/' + row.tokenid + '">' + row.tokenid.substr(0, 5) + '...' + row.tokenid.substr(-5) + '</a>';
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = row.name;
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = row.symbol;
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = row.genesisquantity;
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = (parseFloat(row.circsupply) / 100000000).toFixed(0);
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = row.pausable;
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = row.mintable;
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = row.tokenowners;
+				tr.appendChild(td);
+
+				wallettokens.appendChild(tr);
+
+			});
+
+		});
+
+	});
+</script>
+<script type="text/javascript">
+
+	$(document).ready(function () {
+
+		var socket = io();
+
+		socket.emit('getwallet', { walletId: '{{ walletId }}' });
+		socket.on('showwallet', function (data) {
+
+			$('#address').html(data.address);
+			$('#publickey').html(data.publickey);
+			$('#balance').html(data.balance + 'ARK');
+			$('#isdelegate').html(data.isdelegate);
+
+		});
+
+	});
+</script>
+
+
+<script type="text/javascript">
+
+	$(document).ready(function () {
+
+		var socket = io();
+
+		socket.emit('getdelegatebyid', { walletId: '{{ walletId }}' });
+		socket.on('showdelegatebyid', function (data) {
+
+			$('#username').html(data.username);
+			$('#votes').html(data.votes);
+			$('#rank').html(data.rank);
+			$('#blocksproduced').html(data.blocksproduced);
+			$('#lastproducedblock').html(data.lastproducedblock);
+			$('#approval').html(data.approval);
+			$('#isresigned').html(data.isresigned);
+
+		});
+
+	});
+</script>
+
+
+
+{% endblock %}

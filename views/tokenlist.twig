@@ -1,0 +1,129 @@
+{% extends '/blocks/main.twig' %}
+
+{% block body %}
+{% include '/blocks/menu.twig' %}
+<div class="container">
+	<div
+		class="rounded-lg p-8 border border-theme-secondary-300 dark:border-theme-secondary-800 flex flex-col gap-6 w-full">
+		<div class="xl:w-full">
+
+			<h4 class="box-title">Description</h4>
+		</div>
+		<div class="pt-6 w-full border-t border-theme-secondary-300 dark:border-theme-secondary-800">
+			<div wire:ignore="">
+				<h2
+					class="mb-0 text-sm font-semibold leading-none text-theme-secondary-900 dark:text-theme-secondary-200">
+					Description of ASLP Tokens</h2><br>
+				<div class="input-group w-full">
+
+					<p>ASLP Tokens are fungible and non-fungible tokens created on a sidechain module forked from QSLP
+						(Qredit Side Ledger
+						Protocol).<br>
+						The ASLP Sidechain is not affiliated and does not have any connection with the official ARK
+						brand, the ARK team or the
+						ARK entity.<br>
+						ASLP is a custom module that is used by delegates that have voluntarily decided to run this
+						sidechain alongside their
+						mainnet relay or forging node.</p>
+				</div>
+				<div wire:ignore=""><br>
+					<h2
+						class="mb-0 text-sm font-semibold leading-none text-theme-secondary-900 dark:text-theme-secondary-200">
+						Disclaimer</h2><br>
+					<div class="input-group w-full">
+
+						<p>ASLP or QSLP products and tools comes without any warranties or guarantees. Use at your own
+							risk.
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<hr style="margin-top:25px;margin-bottom:25px;">
+<div class="py-12 w-full container flex flex-col">
+	<div class="box-header with-border">
+		<h4 class="box-title">ASLP Tokens</h4>
+	</div>
+	<div class="table-container w-full">
+		<table class="table no-margin table-hover">
+			<thead>
+				<tr>
+					<th scope="col">ASLP Version</th>
+					<th scope="col">Token Name</th>
+					<th scope="col">Symbol</th>
+					<th scope="col">Owner Address</th>
+					<th scope="col">TokenID</th>
+					<th scope="col">Circulating Supply</th>
+					<th scope="col">Pausable</th>
+					<th scope="col">Mintable</th>
+				</tr>
+			</thead>
+			<tbody id='tokenlist'></tbody>
+		</table>
+	</div>
+</div>
+{% include '/blocks/footer.twig' %}{% endblock %}{% block javascripts %}
+<script>
+	$(document).ready(function () {
+
+
+		var socket = io();
+
+		socket.emit('gettokenlist', {
+			page: 1,
+			limit: 100
+		});
+
+		socket.on('showtokenlist', function (data) {
+			console.log(data)
+			var mainTable = document.getElementById("tokenlist");
+
+			var tr,
+				td;
+
+			data.forEach(function (row) {
+
+				tr = document.createElement("tr");
+
+				td = document.createElement("td");
+				td.innerHTML = row.version;
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = row.name;
+				td.innerHTML = '<a href="/token/' + row.tokenid + '">' + row.name + '</a>';
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = row.symbol;
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = '<a href="/wallet/' + row.owneraddress + '">' + row.owneraddress.substr(0, 5) + '...' + row.owneraddress.substr(-5) + '</a>';
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = '<a href="/token/' + row.tokenid + '">' + row.tokenid.substr(0, 5) + '...' + row.tokenid.substr(-5) + '</a>';
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = row.circsupply + ' ' + row.symbol;
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = row.pausable;
+				tr.appendChild(td);
+
+				td = document.createElement("td");
+				td.innerHTML = row.mintable;
+				tr.appendChild(td);
+
+				tokenlist.appendChild(tr);
+
+			});
+
+		});
+
+	});</script>{% endblock %}
