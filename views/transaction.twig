@@ -78,7 +78,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-12 col-12">
+				<!--	<div class="col-lg-12 col-12">
 					<div class="box">
 						<div class="box-header with-border">
 							<h4 class="box-title">ASLP Token Transaction</h4>
@@ -96,7 +96,7 @@
 							</div>
 						</div>
 					</div>
-				</div>
+				</div> -->
 			</div>
 		</section>
 	</div>
@@ -112,15 +112,15 @@
 
 		var socket = io();
 
-		socket.emit('arkgettransactiondetails', { transactionId: '{{ transactionId }}' });
-		socket.on('arkshowtransactiondetails', function (data) {
+		socket.emit('gettransactiondetails', { transactionId: '{{ transactionId }}' });
+		socket.on('showtransactiondetails', function (data) {
 
-			$('#sender').html('<a href="/ark/wallet/' + data.sender + '">' + data.sender + '</a>');
-			$('#senderto').html('<a href="/ark/wallet/' + data.sender + '">' + data.sender + '</a>');
-			$('#recipient').html('<a href="/ark/wallet/' + data.recipient + '">' + data.recipient + '</a>');
-			$('#recipientto').html('<a href="/ark/wallet/' + data.recipient + '">' + data.recipient + '</a>');
-			$('#txid').html('<a href="/ark/transaction/' + data.txid + '">' + data.txid + '</a>');
-			$('#blockid').html('<a href="/ark/block/' + data.blockid + '">' + data.blockid + '</a>');
+			$('#sender').html('<a href="/wallet/' + data.sender + '">' + data.sender + '</a>');
+			$('#senderto').html('<a href="/wallet/' + data.sender + '">' + data.sender + '</a>');
+			$('#recipient').html('<a href="/wallet/' + data.recipient + '">' + data.recipient + '</a>');
+			$('#recipientto').html('<a href="/wallet/' + data.recipient + '">' + data.recipient + '</a>');
+			$('#txid').html('<a href="/transaction/' + data.txid + '">' + data.txid + '</a>');
+			$('#blockid').html('<a href="/block/' + data.blockid + '">' + data.blockid + '</a>');
 			$('#amount').html(parseFloat(data.amount) / 100000000).toFixed(0);
 			$('#amountsummary').html(parseFloat(data.amountsummary) / 100000000).toFixed(0);
 			$('#confirmations').html(data.confirmations);
