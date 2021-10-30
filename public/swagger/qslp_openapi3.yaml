@@ -4,7 +4,7 @@ info:
   description: |
     API Documentation for the ASLP v1 & v2 API
     <h4>API Endpoint URL</h4>
-    The endpoint for our REST API is:  <code>https://aslp.explorer.sh/api</code>
+    The endpoint for our REST API is:  <code>https://aslp.qredit.dev/api</code>
     <br /><br />
         <h4>Master Address</h4>
     The Master Address for ASLP transactions is:  <code>ARKQXzHvEWXgfCgAcJWJQKUMus5uE6Yckr</code>
@@ -73,7 +73,7 @@ info:
     </table>
   version: 1.0.2
 servers:
-  - url: https://aslp.explorer.sh/api
+  - url: https://aslp.qredit.dev/api
 paths:
   /status:
     get:
