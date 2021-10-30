@@ -372,7 +372,7 @@ io.on('connection', function (socket) {
 				txid: data.id,
 				blockid: data.blockId,
 				id: data.id,
-				amount: data.amount,
+				amount: (parseFloat(data.amount) / 100000000).toFixed(8),
 				fee: data.fee,
 				sender: data.sender,
 				publickey: data.senderPublicKey,
@@ -383,7 +383,7 @@ io.on('connection', function (socket) {
 				nonce: data.nonce,
 				signature: data.signature,
 			};
-
+			console.log(flatJson)
 			socket.emit('showtransactiondetails', flatJson);
 		})();
 
